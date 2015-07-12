@@ -1,0 +1,42 @@
+<?php
+/*
+Dutch Bangla Mobile Payment Controller
+Developed By MD SANAULLAH ASIF
+Dedicated to Abdul Matin
+
+*/
+
+
+// Retrieve order
+$_order = new Mage_Sales_Model_Order();
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+$_order->loadByIncrementId($orderId);
+//$mcode = Mage::getSingleton('checkout/session')->getQuote()->getPayment()->getMethodInstance()->getTitle();
+$redirect_url = Mage::getBaseUrl().'dbm/payment/response';
+
+ 
+	if (Mage::getSingleton('checkout/session')->getQuote()->hasItems()):
+	  
+?>
+<div class="bkash2">
+  <img src="<?php echo Mage::getBaseUrl('media')."dbm/dbbl.png" ?>" />
+  <img src="<?php echo Mage::getBaseUrl('media')."dbm/dbbl-send-money.jpg" ?>" />
+</div>
+  </hr>
+<h2>From any DBBL Mobile Agent with you order Invoice id As below:</h2>
+<h3>SMS: Order Id# <?php echo $orderId; ?>   &nbsp;&nbsp;  Tk: <?php echo $_order->getBaseGrandTotal(); ?></h3>
+
+<form action="<?php echo $redirect_url;?>" method="post">
+	<input type="hidden" name="orderId" value="<?php echo $orderId;?>" />
+	<h3>Your Mobile Number: <input type="text" name="cmob" value="" ><br/>
+	<h3> Your Transaction ID: <input type="text" name="ctrxid" value="" ><br/>
+	<input type="submit" value="GO" >
+	
+</form>
+<?php else:?>
+<div>
+	<h2> Your Session Have No Items in cart! Please Click <a href="<?php echo Mage::getBaseUrl(); ?>">here</a> to Buy </h2>
+</div>
+<?php endif;?>
+
+

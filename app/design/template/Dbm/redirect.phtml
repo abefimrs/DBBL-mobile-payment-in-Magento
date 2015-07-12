@@ -1,0 +1,21 @@
+<?php
+/*
+Dutch Bangla Mobile Payment Controller
+Developed By MD SANAULLAH ASIF
+Dedicated to Abdul Matin
+
+*/
+
+
+// Retrieve order
+$_order = new Mage_Sales_Model_Order();
+$orderId = Mage::getSingleton('checkout/session')->getLastRealOrderId();
+$_order->loadByIncrementId($orderId);
+?>
+<form name="dbbl_form" method="post" action="<?php echo Mage::getBaseUrl();?>dbbl_instruction">
+	<input type="hidden" name="orderid" value="<?php echo $orderId; ?>">
+    <input type="hidden" name="grandtotal" value="<?php echo $_order->getBaseGrandTotal(); ?>">
+</form>
+<script type="text/javascript">
+document.dbbl_form.submit();
+</script>
